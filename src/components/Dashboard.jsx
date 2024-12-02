@@ -5,6 +5,7 @@ import '../css/Dashboard.css';
 import { useNavigate } from "react-router-dom";
 import ExpenseService from "../api/ExpenseService";
 import BudgetService from "../api/BudgetService";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 // Register required Chart.js components
 Chart.register(CategoryScale, ArcElement, BarElement, Tooltip, Legend, LinearScale);
@@ -24,6 +25,13 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
 
+  const [notifications, setNotifications] = useState([]);
+
+  // Set your threshold percentage for alerts
+  const ALERT_THRESHOLD = 0.3;
+
+  const [showBadge, setShowBadge] = useState(false);
+
   // Fetch budget and expenses data (this should come from your API)
   useEffect(() => {
     // You can fetch data from an API and set the state
@@ -31,23 +39,28 @@ const Dashboard = () => {
       try {
         const data = await BudgetService.getBudgetForMonth(selectedMonth, selectedYear);
         if (data) {
-          const totalIncome = data.incomeSources.reduce(
+          const income = data.incomeSources.reduce(
             (acc, source) => acc + parseFloat(source.amount), 0
           );
           const expenseData = await ExpenseService.getDashboardData(selectedMonth);
           if (expenseData.data && expenseData.data.categorySpending) {
             const totalAdditionalIncome = expenseData.data.categorySpending["Additional Income"] || 0 ;
-            const totalExpenses = Object.values(expenseData.data.categorySpending).reduce(
+            let totalExpenses = Object.values(expenseData.data.categorySpending).reduce(
               (acc, curr) => acc + parseFloat(curr), 
               0
             );
+
+            totalExpenses = totalExpenses - totalAdditionalIncome;
             // Set budget summary including total income and expenses
-            console.log('totalIncome',totalIncome+totalAdditionalIncome)
+            const totalIncome = income + totalAdditionalIncome;
+            console.log('totalIncome',totalIncome)
             console.log('totalExpenses',totalExpenses)
             setBudgetSummary({
-              income: totalIncome+totalAdditionalIncome,
+              income: totalIncome,
               expenses: totalExpenses
             });
+
+            setShowBadge(totalExpenses < totalIncome);
 
             const categorySpending = expenseData.data.categorySpending;
 
@@ -66,6 +79,19 @@ const Dashboard = () => {
             };
 
             setExpenseCategories(updatedExpenseCategories);
+
+            // Populate notifications if spending exceeds threshold
+            const newNotifications = [];
+            Object.entries(expenseData.data.categorySpending).forEach(([category, amount]) => {
+              if (category !== "Additional Income" && amount >= (totalIncome * ALERT_THRESHOLD)) {
+                newNotifications.push({
+                  category,
+                  message: `Warning: Your spending in ${category} is nearing the budget limit.`,
+                });
+              }
+            });
+
+            setNotifications(newNotifications);
           }
         }
       } catch (error) {
@@ -127,6 +153,15 @@ const Dashboard = () => {
         </svg>
         <span style={{paddingLeft:"4px"}}>Back</span>
       </div>  
+      {notifications.length > 0 && (
+            <div className="notifications">
+              {notifications.map((notification, index) => (
+                <div key={index} className="notification">
+                  {notification.message}
+                </div>
+              ))}
+            </div>
+      )}
       {/* Budget Summary Section */}
       <div className="summary-section">
         <h2>Budget Summary</h2>
@@ -145,6 +180,21 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
+      {showBadge && (
+        <div className="badge-container">
+        {Array.from({ length: 5 }).map((_, index) => (
+            <img 
+              key={index} 
+              src={`/certificate-solid.svg`} 
+              alt="Badge Icon" 
+              className="badge-icon" 
+              style={{color:"white"}}
+            />
+          ))}
+        🎉 Congratulations! You've stayed within your budget this month!
+      </div>
+      )}
 
       {/* Chart Section for Spending Habits */}
       <div className="chart-section">

@@ -1,4 +1,5 @@
 import axiosInstance from "../axiosConfig";
+import axios from "axios";
 
 const API_URL = 'http://localhost:8080/api/budget'; // Replace with your backend URL
 
@@ -102,11 +103,31 @@ const getBudgetForMonth = async (month, year) => {
   }
 };
 
+const getAdvice = async(prompt) => {
+  const response = await axios.post(
+    "https://api.openai.com/v1/chat/completions",
+    {
+      model: "gpt-3.5-turbo",
+      messages: [{role:"user", content:prompt}] ,
+      max_tokens: 1000,
+    },
+    {
+      headers: {
+        Authorization: `Bearer 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`,
+      },
+    }
+  );
+
+  const advice = response.data.choices[0]?.message?.content?.trim();
+  return advice;
+}
+
 export default {
   saveBudget,
   saveIncomeSources,
   saveFixedExpenses,
   saveVariableExpenses,
   saveSavingsGoals,
-  getBudgetForMonth
+  getBudgetForMonth,
+  getAdvice
 };

@@ -38,23 +38,20 @@ const Login = () => {
     }
   };
 
+  const openRegister = async() => {
+    navigate("/register");
+  };
+
   return (
     <div className="login-container">
+      <div className="heading"> 
+        <img src="/bank-logo.png" alt="Logo" className="logo-image" />
+        <span>Budget Planner</span>
+      </div>
       <div className="login-box">
-        <div
-          className="title"
-          style={{ marginBottom: "20px", fontSize: "28px" }}
-        >
-          Budget Planner
-        </div>
-        <div className="title" style={{ fontSize: "20px", margin: 0 }}>
+        <div className="top-right">English (UK)</div>
+        <div className="title">
           Login
-        </div>
-        <div
-          className="title"
-          style={{ fontWeight: 300, color: "#282B2D", fontSize: "20px" }}
-        >
-          Sign in to your account
         </div>
         <form onSubmit={handleLogin} className="login-form">
           <div className="form-group">
@@ -84,11 +81,9 @@ const Login = () => {
             Login
           </button>
         </form>
-        <form className="login-form">
+        <form className="register-button-form" onSubmit={openRegister}>
           <button type="submit" className="register-button">
-            <Link to="/register" className="register-link">
-              Register new account
-            </Link>
+              Create new account
           </button>
         </form>
       </div>

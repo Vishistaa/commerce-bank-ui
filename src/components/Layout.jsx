@@ -15,7 +15,10 @@ const Layout = ({ children }) => {
   return (
     <div className="layout">
       <div className="layout-header">
-        <h1>Commerce Bank</h1>
+        <div className="header-logo-title">
+          <img src="/bank-logo.png" alt="Logo" className="logo-image" />
+          <h1>Budget Planner</h1>
+        </div>
         {/* Logout button on the top right */}
         <button onClick={handleLogout} className="logout-button">
           Logout

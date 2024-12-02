@@ -38,6 +38,10 @@ const Register = () => {
 
   return (
     <div className="register-container">
+      <div className="heading"> 
+        <img src="/bank-logo.png" alt="Logo" className="logo-image" />
+        <span>Budget Planner</span>
+      </div>
       <div className="register-box">
         <div className="top-right">English (UK)</div>
         <div className="title">Create Account</div>

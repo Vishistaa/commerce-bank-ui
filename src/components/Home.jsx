@@ -13,7 +13,10 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <h1>Welcome</h1>
+      <div style={{display:"flex", flexDirection:"column", alignItems:"flex-start"}}>
+        <h1>Welcome to Your Financial Hub!</h1>
+        <p style={{margin:0}}>Plan, track, and achieve your financial goals with ease. Explore each tool below to manage your budget, monitor expenses, and make smarter financial decisions.</p>
+      </div>
 
       <div className="card-container">
         <div className="card" onClick={() => navigate("/budgets")}>
@@ -30,6 +33,9 @@ const Home = () => {
         </div>
         <div className="card" onClick={() => navigate("/debt-tracker")}>
           <h3>Debt Tracker</h3>
+        </div>
+        <div className="card" onClick={() => navigate("/budget-advice")}>
+          <h3>Financial Advice</h3>
         </div>
       </div>
     </div>

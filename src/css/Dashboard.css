@@ -50,4 +50,29 @@
     max-width: 100%;
     height: auto;
   }
+
+  .notifications {
+    background-color: #ffcc00;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+  }
+  
+  .notification {
+    color: #333;
+    font-weight: bold;
+    margin: 5px 0;
+  }
+
+  .badge-container {
+    display: flex;
+    gap: 8px; /* Space between badges */
+    margin-top: 20px;
+  }
+  
+  .badge-icon {
+    width: 24px; /* Adjust size as needed */
+    height: 24px;
+    color: antiquewhite;
+  }
   
