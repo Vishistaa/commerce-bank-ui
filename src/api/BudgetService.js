@@ -115,7 +115,7 @@ const getAdvice = async(prompt) => {
     },
     {
       headers: {
-        Authorization: `Bearer ${KEY}`,
+        Authorization: `${KEY}`,
       },
     }
   );
