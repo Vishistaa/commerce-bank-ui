@@ -34,8 +34,11 @@ const Home = () => {
         <div className="card" onClick={() => navigate("/debt-tracker")}>
           <h3>Debt Tracker</h3>
         </div>
+        <div className="card" onClick={() => navigate("/investment-insights")}>
+          <h3>Investment Insights</h3>
+        </div>
         <div className="card" onClick={() => navigate("/budget-advice")}>
-          <h3>Financial Advice</h3>
+          <h3>Budget Advice</h3>
         </div>
       </div>
     </div>

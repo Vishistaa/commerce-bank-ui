@@ -3,8 +3,6 @@ import axios from "axios";
 
 const API_URL = 'http://localhost:8080/api/budget'; // Replace with your backend URL
 
-const KEY = '{YOUR_KEY_HERE}';
-
 // Save budget
 const saveBudget = async (budgetData) => {
   try {
@@ -115,7 +113,7 @@ const getAdvice = async(prompt) => {
     },
     {
       headers: {
-        Authorization: `${KEY}`,
+        Authorization: `Bearer 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`,
       },
     }
   );

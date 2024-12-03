@@ -14,7 +14,7 @@ const FinancialGrowthInsights = () => {
         yesterday.setDate(yesterday.getDate() - 2);
         const formattedDate = yesterday.toISOString().split('T')[0] + "T05:47";
         const response = await fetch(
-          `https://api.marketaux.com/v1/news/all?countries=ca&filter_entities=true&limit=3&published_after=${formattedDate}&api_token=C1PgFl8ZcFQnqFCNzjt8cLAwuEp5kEcoygm97xQK`
+          `https://api.marketaux.com/v1/news/all?language=en&countries=ca&filter_entities=true&limit=3&published_after=${formattedDate}&api_token=C1PgFl8ZcFQnqFCNzjt8cLAwuEp5kEcoygm97xQK`
         );
   
         if (!response.ok) {
